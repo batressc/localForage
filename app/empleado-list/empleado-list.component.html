@@ -1,0 +1,21 @@
+<table>
+    <caption>Listado de empleados</caption>
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Nombres</td>
+            <td>Apellidos</td>
+            <td>Edad</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let emp of empleados" (click)="seleccionarEmpleado(emp)">
+            <td>{{ emp.id }}</td>
+            <td>{{ emp.nombre }}</td>
+            <td>{{ emp.apellido }}</td>
+            <td>{{ emp.edad }}</td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<empleado-detalle [empleado]="empleadoSeleccionado"></empleado-detalle>

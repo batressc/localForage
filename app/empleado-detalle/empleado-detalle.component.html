@@ -1,0 +1,21 @@
+<table *ngIf="empleado">
+    <caption>Empleado - {{ empleado.nombre }} {{ empleado.apellido}}</caption>
+    <tbody>
+        <tr>
+            <td>Id</td>
+            <td>{{ empleado.id }}</td>
+        </tr>
+        <tr>
+            <td>Nombres</td>
+            <td>{{ empleado.nombre }}</td>
+        </tr>
+        <tr>
+            <td>Apellidos</td>
+            <td>{{ empleado.apellido }}</td>
+        </tr>
+        <tr>
+            <td>Edad</td>
+            <td>{{ empleado.edad }}</td>
+        </tr>
+    </tbody>
+</table>
