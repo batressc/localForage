@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let emp of empleados" (click)="seleccionarEmpleado(emp)">
+        <tr *ngFor="let emp of empleados" (click)="seleccionarEmpleado(emp, $event)">
             <td>{{ emp.id }}</td>
             <td>{{ emp.nombre }}</td>
             <td>{{ emp.apellido }}</td>

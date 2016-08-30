@@ -11,14 +11,20 @@ import { EMPLEADOS_ARRAY } from '../shared/mocks/empleados.mock';
 class EmpleadoListComponent {
     empleados: Empleado[];
     empleadoSeleccionado: Empleado;
+    empleadosSeleccionados: Empleado[];
 
     constructor() {
         this.empleados = EMPLEADOS_ARRAY;
         this.empleadoSeleccionado = null; 
+        this.empleadosSeleccionados = [];
     }
 
-    seleccionarEmpleado(data: Empleado) {
+    seleccionarEmpleado(data: Empleado, evento: MouseEvent) {
         this.empleadoSeleccionado = data;
+        if (!evento.ctrlKey) this.empleadosSeleccionados = [];
+        this.empleadosSeleccionados.push(this.empleadoSeleccionado);
+        console.log(this.empleadoSeleccionado);
+        console.log(this.empleadosSeleccionados);
     }
 }
 
