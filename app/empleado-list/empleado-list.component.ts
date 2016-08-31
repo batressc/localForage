@@ -41,6 +41,7 @@ class EmpleadoListComponent implements OnInit {
 
     cerrarEditor(data?: Empleado): void {
         this.isAgregar = false;
+        this.empleadoSeleccionado = null;
         this.getEmpleados();
     }
 }

@@ -17,12 +17,15 @@ class EmpleadoDetalleComponent implements OnInit {
     cancelar: EventEmitter<void>;
     @Output()
     save: EventEmitter<Empleado>;
+    @Output()
+    eliminar: EventEmitter<boolean>;
 
     constructor(private empleadoService: EmpleadoService) {
         this.empleado = null;
         this.isAgregar = false;
         this.cancelar = new EventEmitter<void>();
         this.save = new EventEmitter<Empleado>();
+        this.eliminar = new EventEmitter<boolean>();
     }
 
     ngOnInit(): void {
@@ -30,8 +33,26 @@ class EmpleadoDetalleComponent implements OnInit {
     }
 
     guardar(): void {
-        this.empleadoService.agregar(this.empleado)
-            .then(result => this.save.emit(result))
+        if (this.isAgregar) {
+            this.empleadoService.agregar(this.empleado)
+                .then(result => {
+                    this.save.emit(result)
+                })
+                .catch(error => console.error(error));
+        } else {
+            this.empleadoService.modificar(this.empleado)
+                .then(result => {
+                    this.save.emit(result);
+                })
+                .catch(error => console.error(error));
+        }
+    }
+
+    eliminarAccion(): void {
+        this.empleadoService.eliminar(this.empleado)
+            .then(result => {
+                this.eliminar.emit(result);
+            })
             .catch(error => console.error(error));
     }
 

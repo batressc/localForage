@@ -18,7 +18,9 @@
     </tbody>
 </table>
 <br />
-<button (click)="agregar()">Agregar empleado</button>
+<button (click)="agregar()" [attr.disabled]="isAgregar || empleadoSeleccionado ? true : null">Agregar empleado</button>
+<br />
+<br />
 <div *ngIf="isAgregar || empleadoSeleccionado">
-    <empleado-detalle [isAgregar]="isAgregar" [empleado]="empleadoSeleccionado" (save)="cerrarEditor($event)"  (cancelar)="cerrarEditor()"></empleado-detalle>
+    <empleado-detalle [isAgregar]="isAgregar" [empleado]="empleadoSeleccionado" (save)="cerrarEditor($event)"  (cancelar)="cerrarEditor()" (eliminar)="cerrarEditor($event)"></empleado-detalle>
 </div>

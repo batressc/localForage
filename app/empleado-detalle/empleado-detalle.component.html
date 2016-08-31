@@ -22,5 +22,6 @@
     </table>
     <br />
     <button (click)="guardar()">Guardar</button>
+    <button (click)="eliminarAccion()" [attr.hidden]="isAgregar ? true : null">Eliminar</button>
     <button (click)="cancelarAccion()">Cancelar</button>
 </div>
