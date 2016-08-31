@@ -1,30 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Empleado } from '../shared/entities/empleado.entity';
-import { EMPLEADOS_ARRAY } from '../shared/mocks/empleados.mock';
+import { EmpleadoService } from '../shared/services/empleado.service';
 
 @Component({
     selector: 'empleado-list',
     templateUrl: 'app/empleado-list/empleado-list.component.html',
     styleUrls: ['app/empleado-list/empleado-list.component.css']
 })
-class EmpleadoListComponent {
+class EmpleadoListComponent implements OnInit {
     empleados: Empleado[];
     empleadoSeleccionado: Empleado;
-    empleadosSeleccionados: Empleado[];
+    isAgregar: boolean;
 
-    constructor() {
-        this.empleados = EMPLEADOS_ARRAY;
-        this.empleadoSeleccionado = null; 
-        this.empleadosSeleccionados = [];
+    constructor(private empleadoService: EmpleadoService) {
+        this.empleados = [];
+        this.empleadoSeleccionado = null;
+        this.isAgregar = false; 
     }
 
-    seleccionarEmpleado(data: Empleado, evento: MouseEvent) {
+    private getEmpleados(): void {
+        this.empleadoService.consultar()
+            .then(resultado => this.empleados = resultado)
+            .catch(error => console.error('Error al recuperar los datos de empleados del localStorage (localForage)'));
+    }
+
+    ngOnInit(): void {
+        this.getEmpleados();
+    }
+
+    seleccionarEmpleado(data: Empleado) {
+        this.isAgregar = false;
         this.empleadoSeleccionado = data;
-        if (!evento.ctrlKey) this.empleadosSeleccionados = [];
-        this.empleadosSeleccionados.push(this.empleadoSeleccionado);
-        console.log(this.empleadoSeleccionado);
-        console.log(this.empleadosSeleccionados);
+    }
+
+    agregar(): void {
+        this.isAgregar = true;
+        this.empleadoSeleccionado = null;
+    }
+
+    cerrarEditor(data?: Empleado): void {
+        this.isAgregar = false;
+        this.getEmpleados();
     }
 }
 

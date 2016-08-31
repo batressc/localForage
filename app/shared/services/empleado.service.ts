@@ -21,9 +21,7 @@ class EmpleadoService {
         } else {
             console.warn('No se realizó inicialización. Se ocupan valores por defecto');
         }
-    }
-
-    
+    }    
 
     agregar(data: Empleado): Promise<Empleado> {
         return localforage.setItem(data.id, data);
@@ -40,8 +38,31 @@ class EmpleadoService {
             .catch(error => { return Promise.reject(error) });
     }
 
-    eliminar(data: Empleado): Promise<void> {
-        return localforage.removeItem(data.id);
+    eliminar(data: Empleado): Promise<boolean> {
+        return localforage.removeItem(data.id)
+            .then(() => {
+                return localforage.getItem<Empleado>(data.id)
+                    .then(result => {
+                        if (result) return false;
+                        else return true;
+                    })
+            })
+            .catch(error => { return Promise.reject(error) });
+    }
+
+    consultar(): Promise<Empleado[]> {
+        return localforage.keys()
+            .then(keys => {
+                let result: Empleado[] = [];
+                let error: any;
+
+                for(let key of keys) {
+                    localforage.getItem<Empleado>(key)
+                        .then(element => result.push(element));
+                }
+                return result;
+            })
+            .catch(error => { return Promise.reject(error) });
     }
 }
 

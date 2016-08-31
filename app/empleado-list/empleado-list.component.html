@@ -9,7 +9,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let emp of empleados" (click)="seleccionarEmpleado(emp, $event)">
+        <tr *ngFor="let emp of empleados" (click)="seleccionarEmpleado(emp)">
             <td>{{ emp.id }}</td>
             <td>{{ emp.nombre }}</td>
             <td>{{ emp.apellido }}</td>
@@ -18,4 +18,7 @@
     </tbody>
 </table>
 <br />
-<empleado-detalle [empleado]="empleadoSeleccionado"></empleado-detalle>
+<button (click)="agregar()">Agregar empleado</button>
+<div *ngIf="isAgregar || empleadoSeleccionado">
+    <empleado-detalle [isAgregar]="isAgregar" [empleado]="empleadoSeleccionado" (save)="cerrarEditor($event)"  (cancelar)="cerrarEditor()"></empleado-detalle>
+</div>
